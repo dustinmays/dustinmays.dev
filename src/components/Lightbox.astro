@@ -1,0 +1,83 @@
+---
+// Global lightbox overlay. Drop once into the layout. Wires up any element
+// with `data-lightbox` and `data-full` (and optional `data-full-webp`,
+// `data-alt`, `data-caption`). Closes on Esc, click-outside, close button.
+// Respects prefers-reduced-motion (no fade).
+---
+
+<div
+  id="lightbox"
+  class="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="lightbox-caption"
+  aria-hidden="true"
+  hidden
+>
+  <button
+    type="button"
+    class="lightbox-close"
+    aria-label="Close larger view"
+  >×</button>
+  <picture id="lightbox-picture">
+    <source id="lightbox-source-webp" type="image/webp" />
+    <img id="lightbox-image" alt="" />
+  </picture>
+  <p id="lightbox-caption" class="lightbox-caption"></p>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox') as HTMLElement | null;
+  if (lb) {
+    const img = document.getElementById('lightbox-image') as HTMLImageElement;
+    const srcWebp = document.getElementById('lightbox-source-webp') as HTMLSourceElement;
+    const caption = document.getElementById('lightbox-caption') as HTMLElement;
+    const closeBtn = lb.querySelector('.lightbox-close') as HTMLButtonElement;
+    let lastFocus: HTMLElement | null = null;
+
+    const open = (trigger: HTMLElement) => {
+      const full = trigger.getAttribute('data-full');
+      const fullWebp = trigger.getAttribute('data-full-webp');
+      const alt = trigger.getAttribute('data-alt') ?? '';
+      const cap = trigger.getAttribute('data-caption') ?? '';
+      if (!full) return;
+      img.src = full;
+      img.alt = alt;
+      if (fullWebp) srcWebp.srcset = fullWebp;
+      caption.textContent = cap;
+      lastFocus = trigger;
+      lb.hidden = false;
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    const close = () => {
+      lb.hidden = true;
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      img.removeAttribute('src');
+      srcWebp.removeAttribute('srcset');
+      caption.textContent = '';
+      if (lastFocus) lastFocus.focus();
+    };
+
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest('[data-lightbox]');
+      if (target instanceof HTMLElement) {
+        e.preventDefault();
+        open(target);
+      }
+    });
+
+    closeBtn.addEventListener('click', close);
+
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lb.hidden && e.key === 'Escape') close();
+    });
+  }
+</script>

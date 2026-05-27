@@ -1,0 +1,67 @@
+---
+// Section-closing mosaic per DESIGN.md. Shape derived from photo count.
+// Photos open in lightbox on click; the global Lightbox script attaches
+// handlers to any element with the `data-lightbox` attribute.
+export interface Photo {
+  slug: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  photos: Photo[];
+  label?: string;
+}
+
+const { photos, label } = Astro.props;
+const count = photos.length;
+const shape = count === 1 ? 'one' : count === 2 ? 'two' : count === 3 ? 'three' : 'four';
+---
+
+<figure
+  class={`mosaic mosaic-${shape}`}
+  role="group"
+  aria-label={label ?? `${count} photo${count === 1 ? '' : 's'}`}
+>
+  {photos.map((p) => {
+    const base = `/photos/${p.slug}`;
+    return (
+      <figure class="mosaic-item">
+        <button
+          type="button"
+          class="lightbox-trigger"
+          data-lightbox
+          data-full={`${base}@2x.jpg`}
+          data-full-webp={`${base}@2x.webp`}
+          data-alt={p.alt}
+          data-caption={p.caption}
+          aria-label={`Open larger view: ${p.caption}`}
+        >
+          <picture>
+            <source
+              type="image/webp"
+              srcset={`${base}.webp 780w, ${base}@2x.webp 1560w`}
+              sizes="(max-width: 640px) 100vw, 420px"
+            />
+            <source
+              type="image/jpeg"
+              srcset={`${base}.jpg 780w, ${base}@2x.jpg 1560w`}
+              sizes="(max-width: 640px) 100vw, 420px"
+            />
+            <img
+              src={`${base}.jpg`}
+              alt={p.alt}
+              width={p.width}
+              height={p.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </button>
+        <figcaption>{p.caption}</figcaption>
+      </figure>
+    );
+  })}
+</figure>

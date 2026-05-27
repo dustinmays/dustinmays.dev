@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Photo from '../components/Photo.astro';
 import ProjectBlock from '../components/ProjectBlock.astro';
 import Fleuron from '../components/Fleuron.astro';
+import Mosaic from '../components/Mosaic.astro';
+import Lightbox from '../components/Lightbox.astro';
 
 import HeroCopy from '../content/hero.mdx';
 import RipitCopy from '../content/aptx-ripit.mdx';
@@ -11,10 +12,61 @@ import OtNotesCopy from '../content/aptx-ot-notes.mdx';
 import BackgroundCopy from '../content/background.mdx';
 import AboutCopy from '../content/about.mdx';
 import NowCopy from '../content/now.mdx';
+
+const aptxMosaic = [
+  {
+    slug: 'ot-notes-shorthand-input',
+    alt: 'The ot-notes input view: a clinician types raw session shorthand into a single freeform field. Synthetic demo data shown. Designed so clinicians can capture clinically rich notes without formatting overhead.',
+    caption: 'ot-notes input view. Raw shorthand goes in. Synthetic demo data.',
+    width: 780,
+    height: 707,
+  },
+  {
+    slug: 'ot-notes-generated-soap',
+    alt: 'The ot-notes output view: the same session rendered into a formal SOAP-format Occupational Therapy Session Note, with client identifiers automatically replaced by [NAME REDACTED] placeholders.',
+    caption: 'ot-notes output view. The same session as a SOAP note, identifiers redacted.',
+    width: 780,
+    height: 764,
+  },
+];
+
+const backgroundMosaic = [
+  {
+    slug: 'leg-protector-pvc-prototype',
+    alt: 'Early PVC prototype of the wheelchair leg-protector device, fitted on a client\'s chair during a clinical session. Subject\'s face anonymized. The frame uses standard PVC fittings with adjustable connectors, taped and labeled to test fit before refinement.',
+    caption: 'Early PVC prototype. Cheap, ugly, fast to iterate on.',
+    width: 780,
+    height: 1040,
+  },
+  {
+    slug: 'leg-protector-design-drawing',
+    alt: 'Hand-drawn dimensioned design for the refined leg-protector frame, with side and front views. Annotations in red pen specify adjustable ranges and reference the wheelchair frame geometry it mounts to.',
+    caption: 'Dimensioned design for the refined version.',
+    width: 780,
+    height: 1040,
+  },
+  {
+    slug: 'leg-protector-in-use',
+    alt: 'Former client using the finished leg-protector — a canvas-covered frame mounted to the front of his power wheelchair — several months after delivery. Subject\'s face anonymized. He reported the device gave him more confidence leaving the house.',
+    caption: 'Former client using the finished device, several months in.',
+    width: 780,
+    height: 1387,
+  },
+];
+
+const aboutMosaic = [
+  {
+    slug: 'metalwork-forged-arch',
+    alt: 'Forged steel sculpture — an arched form with a textured disc top, hammered and surface-treated. Personal hobby project.',
+    caption: 'Forged arch with a textured disc top. Blacksmithing class output.',
+    width: 780,
+    height: 877,
+  },
+];
 ---
 
 <BaseLayout>
-  {/* HERO */}
+  {/* HERO — text only, no photo */}
   <section class="hero" aria-labelledby="hero-name">
     <h1 id="hero-name" class="display-xl">Dustin Mays</h1>
 
@@ -22,17 +74,8 @@ import NowCopy from '../content/now.mdx';
       <HeroCopy />
     </div>
 
-    <Photo
-      slug="leg-protector-in-use"
-      width={780}
-      height={1387}
-      alt="Former client using the finished leg-protector — a canvas-covered frame mounted to the front of his power wheelchair — several months after delivery. Subject's face anonymized. He reported the device gave him more confidence leaving the house."
-      caption="Former client using the finished leg-protector several months after delivery."
-      eager={true}
-    />
-
     <nav class="hero-links" aria-label="Primary contact">
-      <a href="https://www.linkedin.com/in/dustinmays/" rel="noopener">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/dustin-mays-atot/" rel="noopener">LinkedIn</a>
       <a href="https://github.com/dustinmays" rel="noopener">GitHub</a>
       <a href="mailto:drm2010.dustin@gmail.com">Email</a>
     </nav>
@@ -68,24 +111,10 @@ import NowCopy from '../content/now.mdx';
       href="https://github.com/aptx-health/ot-notes"
       hrefLabel="github.com/aptx-health/ot-notes"
     >
-      <Photo
-        slot="screenshot"
-        slug="ot-notes-shorthand-input"
-        width={780}
-        height={707}
-        alt="The OT-Notes input view: a clinician types raw session shorthand into a single freeform field. Synthetic demo data shown. Designed so clinicians can capture clinically rich notes without formatting overhead."
-        caption="Input view. Raw shorthand goes in. Synthetic demo data shown."
-      />
-      <Photo
-        slot="screenshot"
-        slug="ot-notes-generated-soap"
-        width={780}
-        height={764}
-        alt="The OT-Notes output view: the same session rendered into a formal SOAP-format Occupational Therapy Session Note, with client identifiers automatically replaced by [NAME REDACTED] placeholders."
-        caption="Output view. The same session rendered as a SOAP note, with identifiers redacted."
-      />
       <OtNotesCopy />
     </ProjectBlock>
+
+    <Mosaic photos={aptxMosaic} label="ot-notes screenshots" />
   </section>
 
   <Fleuron />
@@ -97,21 +126,7 @@ import NowCopy from '../content/now.mdx';
       <BackgroundCopy />
     </div>
 
-    <Photo
-      slug="leg-protector-pvc-prototype"
-      width={780}
-      height={1040}
-      alt="Early PVC prototype of the wheelchair leg-protector device, fitted on a client's chair during a clinical session. Subject's face anonymized. The frame uses standard PVC fittings with adjustable connectors, taped and labeled to test fit before refinement."
-      caption="Early PVC prototype. Cheap, ugly, fast to iterate on. Standard PVC fittings, labeled and adjustable so we could test fit before refining."
-    />
-
-    <Photo
-      slug="leg-protector-design-drawing"
-      width={780}
-      height={1040}
-      alt="Hand-drawn dimensioned design for the refined leg-protector frame, with side and front views. Annotations in red pen specify adjustable ranges (16–18 inch height, 23 inch max width, 45 degree leg angle) and reference the wheelchair frame geometry it mounts to."
-      caption="Dimensioned design for the refined version. Annotations call out the adjustable ranges and the wheelchair frame it mounts to."
-    />
+    <Mosaic photos={backgroundMosaic} label="Leg-protector iteration photos" />
   </section>
 
   <Fleuron />
@@ -123,14 +138,7 @@ import NowCopy from '../content/now.mdx';
       <AboutCopy />
     </div>
 
-    <Photo
-      slug="metalwork-forged-arch"
-      width={780}
-      height={877}
-      alt="Forged steel sculpture — an arched form with a textured disc top, hammered and surface-treated. Personal hobby project."
-      caption="Forged arch with a textured disc top. Blacksmithing class output."
-      proseWidth={true}
-    />
+    <Mosaic photos={aboutMosaic} label="Metalwork photo" />
   </section>
 
   {/* NOW */}
@@ -149,4 +157,6 @@ import NowCopy from '../content/now.mdx';
       Source at <a href="https://github.com/dustinmays/dustinmays.dev" rel="noopener">github.com/dustinmays/dustinmays.dev</a>.
     </p>
   </footer>
+
+  <Lightbox />
 </BaseLayout>
