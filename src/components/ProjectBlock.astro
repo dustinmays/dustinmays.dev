@@ -1,0 +1,28 @@
+---
+interface Props {
+  name: string;
+  status: string;
+  href?: string;
+  hrefLabel?: string;
+}
+
+const { name, status, href, hrefLabel } = Astro.props;
+---
+
+<article class="project">
+  <header class="project-head">
+    <h3 class="display-m">{name}</h3>
+    <span class="tag">{status}</span>
+  </header>
+
+  <slot name="screenshot" />
+
+  <div class="project-body prose">
+    <slot />
+    {href && (
+      <p class="project-link">
+        <a href={href} rel="noopener">{hrefLabel ?? href.replace(/^https?:\/\//, '')}</a>
+      </p>
+    )}
+  </div>
+</article>

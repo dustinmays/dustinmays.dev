@@ -1,0 +1,53 @@
+---
+// Responsive picture element. Pass `slug` (filename stem in /photos/) and
+// the intrinsic dimensions of the @1x asset. Renders WebP + JPEG sources,
+// each with @1x (780w) and @2x (1560w).
+interface Props {
+  slug: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+  eager?: boolean;
+  proseWidth?: boolean;
+  sizes?: string;
+}
+
+const {
+  slug,
+  alt,
+  width,
+  height,
+  caption,
+  eager = false,
+  proseWidth = false,
+  sizes = '(max-width: 780px) 100vw, 780px',
+} = Astro.props;
+
+const base = `/photos/${slug}`;
+---
+
+<figure class={proseWidth ? 'prose-width' : ''}>
+  <picture>
+    <source
+      type="image/webp"
+      srcset={`${base}.webp 780w, ${base}@2x.webp 1560w`}
+      sizes={sizes}
+    />
+    <source
+      type="image/jpeg"
+      srcset={`${base}.jpg 780w, ${base}@2x.jpg 1560w`}
+      sizes={sizes}
+    />
+    <img
+      src={`${base}.jpg`}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding={eager ? 'sync' : 'async'}
+      class={eager ? 'hero-photo' : ''}
+    />
+  </picture>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

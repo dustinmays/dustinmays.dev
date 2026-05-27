@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import ProjectBlock from '../components/ProjectBlock.astro';
+import Fleuron from '../components/Fleuron.astro';
+
+import HeroCopy from '../content/hero.mdx';
+import RipitCopy from '../content/aptx-ripit.mdx';
+import AgentMinderCopy from '../content/aptx-agent-minder.mdx';
+import OtNotesCopy from '../content/aptx-ot-notes.mdx';
+import BackgroundCopy from '../content/background.mdx';
+import AboutCopy from '../content/about.mdx';
+import NowCopy from '../content/now.mdx';
+---
+
+<BaseLayout>
+  {/* HERO */}
+  <section class="hero" aria-labelledby="hero-name">
+    <h1 id="hero-name" class="display-xl">Dustin Mays</h1>
+
+    <div class="prose body-large thesis">
+      <HeroCopy />
+    </div>
+
+    <Photo
+      slug="leg-protector-in-use"
+      width={780}
+      height={1387}
+      alt="Former client using the finished leg-protector — a canvas-covered frame mounted to the front of his power wheelchair — several months after delivery. Subject's face anonymized. He reported the device gave him more confidence leaving the house."
+      caption="Former client using the finished leg-protector several months after delivery."
+      eager={true}
+    />
+
+    <nav class="hero-links" aria-label="Primary contact">
+      <a href="https://www.linkedin.com/in/dustinmays/" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/dustinmays" rel="noopener">GitHub</a>
+      <a href="mailto:drm2010.dustin@gmail.com">Email</a>
+    </nav>
+  </section>
+
+  <Fleuron />
+
+  {/* APTX HEALTH */}
+  <section aria-labelledby="aptx-heading">
+    <h2 id="aptx-heading" class="display-l">Aptx Health</h2>
+
+    <ProjectBlock
+      name="Ripit Fitness"
+      status="Active"
+      href="https://ripit.fit"
+      hrefLabel="ripit.fit"
+    >
+      <RipitCopy />
+    </ProjectBlock>
+
+    <ProjectBlock
+      name="agent-minder"
+      status="Open source"
+      href="https://github.com/aptx-health/agent-minder"
+      hrefLabel="github.com/aptx-health/agent-minder"
+    >
+      <AgentMinderCopy />
+    </ProjectBlock>
+
+    <ProjectBlock
+      name="ot-notes"
+      status="Sunset 2025"
+      href="https://github.com/aptx-health/ot-notes"
+      hrefLabel="github.com/aptx-health/ot-notes"
+    >
+      <Photo
+        slot="screenshot"
+        slug="ot-notes-shorthand-input"
+        width={780}
+        height={707}
+        alt="The OT-Notes input view: a clinician types raw session shorthand into a single freeform field. Synthetic demo data shown. Designed so clinicians can capture clinically rich notes without formatting overhead."
+        caption="Input view. Raw shorthand goes in. Synthetic demo data shown."
+      />
+      <Photo
+        slot="screenshot"
+        slug="ot-notes-generated-soap"
+        width={780}
+        height={764}
+        alt="The OT-Notes output view: the same session rendered into a formal SOAP-format Occupational Therapy Session Note, with client identifiers automatically replaced by [NAME REDACTED] placeholders."
+        caption="Output view. The same session rendered as a SOAP note, with identifiers redacted."
+      />
+      <OtNotesCopy />
+    </ProjectBlock>
+  </section>
+
+  <Fleuron />
+
+  {/* BEFORE APTX HEALTH */}
+  <section aria-labelledby="background-heading">
+    <h2 id="background-heading" class="display-l">Before Aptx Health</h2>
+    <div class="prose">
+      <BackgroundCopy />
+    </div>
+
+    <Photo
+      slug="leg-protector-pvc-prototype"
+      width={780}
+      height={1040}
+      alt="Early PVC prototype of the wheelchair leg-protector device, fitted on a client's chair during a clinical session. Subject's face anonymized. The frame uses standard PVC fittings with adjustable connectors, taped and labeled to test fit before refinement."
+      caption="Early PVC prototype. Cheap, ugly, fast to iterate on. Standard PVC fittings, labeled and adjustable so we could test fit before refining."
+    />
+
+    <Photo
+      slug="leg-protector-design-drawing"
+      width={780}
+      height={1040}
+      alt="Hand-drawn dimensioned design for the refined leg-protector frame, with side and front views. Annotations in red pen specify adjustable ranges (16–18 inch height, 23 inch max width, 45 degree leg angle) and reference the wheelchair frame geometry it mounts to."
+      caption="Dimensioned design for the refined version. Annotations call out the adjustable ranges and the wheelchair frame it mounts to."
+    />
+  </section>
+
+  <Fleuron />
+
+  {/* ABOUT */}
+  <section aria-labelledby="about-heading">
+    <h2 id="about-heading" class="display-l">About</h2>
+    <div class="prose">
+      <AboutCopy />
+    </div>
+
+    <Photo
+      slug="metalwork-forged-arch"
+      width={780}
+      height={877}
+      alt="Forged steel sculpture — an arched form with a textured disc top, hammered and surface-treated. Personal hobby project."
+      caption="Forged arch with a textured disc top. Blacksmithing class output."
+      proseWidth={true}
+    />
+  </section>
+
+  {/* NOW */}
+  <section aria-labelledby="now-heading">
+    <h2 id="now-heading" class="display-l">Now</h2>
+    <div class="prose now">
+      <NowCopy />
+    </div>
+  </section>
+
+  {/* FOOTER / COLOPHON */}
+  <footer>
+    <p>
+      Built with <a href="https://astro.build" rel="noopener">Astro</a>, hosted on
+      Cloudflare. Type set in Source Serif 4. Last updated May 2026.
+      Source at <a href="https://github.com/dustinmays/dustinmays.dev" rel="noopener">github.com/dustinmays/dustinmays.dev</a>.
+    </p>
+  </footer>
+</BaseLayout>
