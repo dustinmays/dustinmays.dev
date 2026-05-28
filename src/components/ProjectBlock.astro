@@ -21,7 +21,7 @@ const { name, status, href, hrefLabel } = Astro.props;
     <slot />
     {href && (
       <p class="project-link">
-        <a href={href} rel="noopener">{hrefLabel ?? href.replace(/^https?:\/\//, '')}</a>
+        <a href={href} target="_blank" rel="noopener noreferrer">{hrefLabel ?? href.replace(/^https?:\/\//, '')}</a>
       </p>
     )}
   </div>
