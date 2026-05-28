@@ -292,6 +292,7 @@ code {
 }
 
 .background-subhead {
+  display: block;
   margin: 4rem 0 1rem 0;
   max-width: var(--measure-prose);
   line-height: 1.25;
