@@ -287,6 +287,16 @@ code {
   }
 }
 
+.background-block + .background-block {
+  margin-top: 1.5rem;
+}
+
+.background-subhead {
+  margin: 2.25rem 0 1rem 0;
+  max-width: var(--measure-prose);
+  line-height: 1.2;
+}
+
 /* Mosaic — section-closing photo group, ≤640px column, photos ≤420px wide */
 .mosaic {
   margin: 2.5rem 0 0 0;

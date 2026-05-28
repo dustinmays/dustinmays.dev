@@ -1,4 +1,6 @@
 ---
+import { execSync } from 'node:child_process';
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectBlock from '../components/ProjectBlock.astro';
 import Mosaic from '../components/Mosaic.astro';
@@ -8,9 +10,24 @@ import HeroCopy from '../content/hero.mdx';
 import RipitCopy from '../content/aptx-ripit.mdx';
 import AgentMinderCopy from '../content/aptx-agent-minder.mdx';
 import OtNotesCopy from '../content/aptx-ot-notes.mdx';
-import BackgroundCopy from '../content/background.mdx';
+import FreewaveCopy from '../content/background-freewave.mdx';
+import OtIntroCopy from '../content/background-ot-intro.mdx';
+import VcuCopy from '../content/background-vcu.mdx';
+import LegProtectorCopy from '../content/background-leg-protector.mdx';
 import AboutCopy from '../content/about.mdx';
 import NowCopy from '../content/now.mdx';
+
+// Last updated: ISO date of the most recent git commit at build time.
+let lastUpdated = 'recently';
+try {
+  const iso = execSync('git log -1 --format=%cI', { encoding: 'utf-8' }).trim();
+  lastUpdated = new Date(iso).toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+} catch {
+  // Fallback if git isn't available at build time (shouldn't happen in CI).
+}
 
 const aptxMosaic = [
   {
@@ -46,8 +63,8 @@ const backgroundMosaic = [
   },
   {
     slug: 'leg-protector-in-use',
-    alt: 'Former client using the finished leg-protector — a canvas-covered frame mounted to the front of his power wheelchair — several months after delivery. Subject\'s face anonymized. He reported the device gave him more confidence leaving the house.',
-    caption: 'Former client using the finished device, several months in.',
+    alt: 'Former client using the finished leg-protector mounted to the front of his power wheelchair, several months after delivery. Subject\'s face anonymized. He reported the device gave him more confidence leaving the house.',
+    caption: 'Former client using the finished device, years later.',
     width: 780,
     height: 1387,
   },
@@ -56,7 +73,7 @@ const backgroundMosaic = [
 const aboutMosaic = [
   {
     slug: 'metalwork-forged-arch',
-    alt: 'Forged steel sculpture — an arched form with a textured disc top, hammered and surface-treated. Personal hobby project.',
+    alt: 'Forged steel sculpture: an arched form with a textured disc top, hammered and surface-treated. Personal hobby project.',
     caption: 'Forged arch with a textured disc top. Blacksmithing class output.',
     width: 780,
     height: 877,
@@ -119,8 +136,29 @@ const aboutMosaic = [
   {/* BEFORE APTX HEALTH */}
   <section aria-labelledby="background-heading">
     <h2 id="background-heading" class="display-l">Before Aptx Health</h2>
-    <div class="prose">
-      <BackgroundCopy />
+
+    <div class="prose background-block">
+      <FreewaveCopy />
+    </div>
+
+    <div class="prose background-block">
+      <OtIntroCopy />
+    </div>
+
+    <h3 class="display-m background-subhead">
+      <a
+        href="https://news.vcu.edu/article/They_created_a_computer_station__and_changed_a_quadriplegic_patients"
+        target="_blank"
+        rel="noopener noreferrer"
+      >They created a computer station — and changed a quadriplegic patient&rsquo;s life</a>
+    </h3>
+
+    <div class="prose background-block">
+      <VcuCopy />
+    </div>
+
+    <div class="prose background-block">
+      <LegProtectorCopy />
     </div>
 
     <Mosaic photos={backgroundMosaic} label="Leg-protector iteration photos" />
@@ -149,7 +187,7 @@ const aboutMosaic = [
   <footer>
     <p>
       Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>, hosted on
-      Cloudflare. Type set in Source Serif 4. Last updated May 2026.
+      Cloudflare. Type set in Source Serif 4. Last updated {lastUpdated}.
       Source at <a href="https://github.com/dustinmays/dustinmays.dev" target="_blank" rel="noopener noreferrer">github.com/dustinmays/dustinmays.dev</a>.
     </p>
   </footer>
